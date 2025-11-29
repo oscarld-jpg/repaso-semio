@@ -6,162 +6,354 @@ export const CLINICAL_CASES: CaseData[] = [
     id: 'case-1',
     title: 'Caso 1: "Me falta el aire de golpe"',
     patientInfo: {
-      demographics: 'Mujer, 65 años.',
-      history: 'Cirugía de cadera hace 10 días. Reposo en cama.',
-      symptoms: 'Disnea de inicio súbito + Dolor pleurítico + Taquicardia. Saturación inesperadamente baja.',
+      demographics: 'Varón, 63 años.',
+      history: 'Post-operatorio de rodilla (día 2). Fumador.',
+      symptoms: 'Disnea súbita al ir al baño + Dolor pleurítico + Taquicardia (110 lpm). SatO2 88%.',
     },
-    quiz: {
-      question: 'Tiene alta probabilidad clínica (Wells Alto). ¿Cuál es la conducta inmediata?',
-      options: [
-        { id: 'a', text: 'Pedir Dímero D para confirmar', isCorrect: false },
-        { id: 'b', text: 'Solicitar AngioTAC (o anticoagular si demora)', isCorrect: true },
-        { id: 'c', text: 'Nebulizar con Salbutamol y reevaluar', isCorrect: false },
-      ],
-      explanation: '¡Cuidado! El Dímero D tiene alto Valor Predictivo Negativo (sirve para descartar en baja probabilidad), pero en ALTA probabilidad debemos confirmar con imagen.'
-    },
+    questions: [
+      {
+        id: 'q1_action',
+        text: 'Antes de hablar de diagnósticos: Tienes un paciente con disnea súbita y taquicardia. ¿Qué maniobra del EXAMEN FÍSICO realizas inmediatamente para orientar la causa?',
+        options: [
+          { id: 'a', text: 'Auscultación cardíaca buscando soplos', isCorrect: false },
+          { id: 'b', text: 'Examinar pantorrillas (asimetría, dolor, empastamiento)', isCorrect: true },
+          { id: 'c', text: 'Palpación abdominal profunda', isCorrect: false }
+        ],
+        explanation: '¡Exacto! Ante disnea súbita + cirugía reciente, debes buscar la FUENTE del problema. Una pantorrilla asimétrica o dolorosa (Signo de Homans/Ollow) sugiere TVP, orientando el caso a TEP.'
+      },
+      {
+        id: 'q1',
+        text: 'Al examinar, encuentras la pierna derecha edematizada y caliente. Ahora sí, ¿cuál es tu sospecha sindrómica principal?',
+        options: [
+          { id: 'a', text: 'Síndrome Coronario Agudo', isCorrect: false },
+          { id: 'b', text: 'Tromboembolismo Pulmonar (TEP)', isCorrect: true },
+          { id: 'c', text: 'Neumonía intrahospitalaria', isCorrect: false }
+        ],
+        explanation: 'La clínica es soberana: Disnea súbita + Taquicardia + Signos de TVP en contexto post-quirúrgico = TEP hasta que se demuestre lo contrario.'
+      },
+      {
+        id: 'q2',
+        text: 'Vamos a estratificar el riesgo. Calculando el Score de Wells para este paciente específico. ¿Qué probabilidad clínica tiene?',
+        options: [
+          { id: 'a', text: 'Baja (0-1 puntos)', isCorrect: false },
+          { id: 'b', text: 'Intermedia', isCorrect: false },
+          { id: 'c', text: 'Alta (≥ 7 puntos)', isCorrect: true }
+        ],
+        explanation: (
+          <div className="text-sm">
+            <p>Suma: Signos TVP (3.0) + TEP diagnóstico más probable (3.0) + Taquicardia (1.5) + Cirugía reciente (1.5). <strong>Total: 9 Puntos (Alta).</strong></p>
+          </div>
+        )
+      },
+      {
+        id: 'q3',
+        text: 'Con probabilidad ALTA, ¿cuál es la conducta diagnóstica "Gold Standard" a seguir?',
+        options: [
+          { id: 'a', text: 'Pedir Dímero D para descartar', isCorrect: false },
+          { id: 'b', text: 'AngioTAC de Tórax (Protocolo TEP)', isCorrect: true },
+          { id: 'c', text: 'Ecocardiograma Doppler', isCorrect: false }
+        ],
+        explanation: 'En probabilidad ALTA, el Dímero D no sirve (un negativo puede ser falso). Se va directo a imagen confirmatoria (AngioTAC) y se inicia anticoagulación si no hay contraindicación.'
+      }
+    ],
     deepDive: {
-      title: 'Score de Wells y Conducta',
+      title: 'Cálculo del Score de Wells (Este Paciente)',
       content: (
-        <div className="text-sm">
-          <p className="mb-2"><strong>Alta Probabilidad ({'>'}4 pts):</strong> El TEP es probable.</p>
-          <ul className="list-disc pl-4 mb-2 space-y-1">
-            <li>Clínica de TVP (3)</li>
-            <li>Otro Dx menos probable (3)</li>
-            <li>Inmovilización/Cirugía (1.5)</li>
-          </ul>
-          <p>La conducta es <strong>AngioTAC directa</strong>. Si hay demora, se anticoagula empíricamente.</p>
+        <div className="text-sm space-y-2">
+          <p className="mb-2 text-slate-600">Veamos por qué este paciente tiene <strong>Alta Probabilidad (9 pts)</strong>:</p>
+          <table className="w-full text-xs border-collapse border border-slate-200 mb-2 shadow-sm">
+            <thead className="bg-blue-50 text-blue-800">
+              <tr>
+                <th className="p-2 border text-left">Criterio</th>
+                <th className="p-2 border text-center">Valor</th>
+                <th className="p-2 border text-center">¿Presente?</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="bg-yellow-50">
+                <td className="p-2 border font-medium">Signos Clínicos de TVP</td>
+                <td className="p-2 border text-center">3.0</td>
+                <td className="p-2 border text-center font-bold text-green-600">SÍ (+3.0)</td>
+              </tr>
+              <tr className="bg-yellow-50">
+                <td className="p-2 border font-medium">TEP es el dx más probable</td>
+                <td className="p-2 border text-center">3.0</td>
+                <td className="p-2 border text-center font-bold text-green-600">SÍ (+3.0)</td>
+              </tr>
+              <tr className="bg-yellow-50">
+                <td className="p-2 border">Frecuencia Cardíaca &gt; 100</td>
+                <td className="p-2 border text-center">1.5</td>
+                <td className="p-2 border text-center font-bold text-green-600">SÍ (+1.5)</td>
+              </tr>
+              <tr className="bg-yellow-50">
+                <td className="p-2 border">Cirugía/Inmovilización &lt;4 sem</td>
+                <td className="p-2 border text-center">1.5</td>
+                <td className="p-2 border text-center font-bold text-green-600">SÍ (+1.5)</td>
+              </tr>
+              <tr>
+                <td className="p-2 border text-slate-400">Antecedente TVP/TEP previo</td>
+                <td className="p-2 border text-center text-slate-400">1.5</td>
+                <td className="p-2 border text-center text-slate-300">NO</td>
+              </tr>
+              <tr>
+                <td className="p-2 border text-slate-400">Hemoptisis</td>
+                <td className="p-2 border text-center text-slate-400">1.0</td>
+                <td className="p-2 border text-center text-slate-300">NO</td>
+              </tr>
+              <tr>
+                <td className="p-2 border text-slate-400">Cáncer activo</td>
+                <td className="p-2 border text-center text-slate-400">1.0</td>
+                <td className="p-2 border text-center text-slate-300">NO</td>
+              </tr>
+            </tbody>
+            <tfoot className="bg-slate-100 font-bold">
+               <tr>
+                <td className="p-2 border text-right">TOTAL PACIENTE:</td>
+                <td className="p-2 border text-center" colSpan={2}>9.0 Puntos (ALTO)</td>
+              </tr>
+            </tfoot>
+          </table>
+          <p className="text-xs text-slate-500 italic">Interpretación: &gt;6 Puntos = Riesgo Alto.</p>
         </div>
       ),
-      pearl: 'Disnea súbita + Dolor pleurítico + Taquicardia = TEP hasta demostrar lo contrario.',
-      error: 'Pedir Dímero D en un paciente con ALTA probabilidad clínica o Wells alto.'
+      pearl: 'Siempre revisa las piernas. Una pantorrilla asimétrica, caliente y dolorosa te da el diagnóstico de origen (TVP) y suma 3 puntos críticos.',
+      error: 'Pedir Dímero D en pacientes de ALTA probabilidad (9 puntos). Es una pérdida de tiempo; el paciente necesita imagen.'
     }
   },
   {
     id: 'case-2',
-    title: 'Caso 2: "Doctor, vomité sangre"',
+    title: 'Caso 2: "Vomité sangre"',
     patientInfo: {
-      demographics: 'Varón, 50 años.',
-      history: 'Etilista crónico, consumo de AINEs.',
-      symptoms: 'Hematemesis y Melena. Llega pálido e hipotenso (TA 90/60).',
+      demographics: 'Varón, 54 años.',
+      history: 'Alcoholismo crónico, lumbalgia (toma AINEs).',
+      symptoms: 'Hematemesis franca y mareos. TA 90/60 mmHg (Hipotenso). FC 115 lpm.',
     },
-    quiz: {
-      question: 'El paciente está hipotenso. ¿Cuál es el primer paso?',
-      options: [
-        { id: 'a', text: 'Enviar urgente a Endoscopía', isCorrect: false },
-        { id: 'b', text: 'Colocar Sonda Nasogástrica', isCorrect: false },
-        { id: 'c', text: 'Estabilizar Hemodinámicamente (ABC)', isCorrect: true },
-      ],
-      explanation: 'La endoscopía se realiza con el paciente estable. La prioridad es recuperar la volemia (vías, fluidos, sangre).'
-    },
+    questions: [
+      {
+        id: 'q1',
+        text: 'El paciente está hipotenso y taquicárdico. ¿Cuál es la conducta TERAPÉUTICA prioritaria antes de investigar la causa?',
+        options: [
+          { id: 'a', text: 'Colocar sonda nasogástrica para lavar', isCorrect: false },
+          { id: 'b', text: 'Endoscopía digestiva de urgencia', isCorrect: false },
+          { id: 'c', text: 'Estabilización Hemodinámica (Vías, Cristaloides)', isCorrect: true }
+        ],
+        explanation: '¡Primero la vida! No se puede endoscopiar a un paciente chocado. Primero ABC: Vías gruesas, reposición de volumen y estabilizar TA.'
+      },
+      {
+        id: 'q2',
+        text: 'Al interrogar, refiere heces negras y fétidas (melena). Semiologicamente, ¿qué indica esto?',
+        options: [
+          { id: 'a', text: 'Confirma origen Digestivo ALTO (90%)', isCorrect: true },
+          { id: 'b', text: 'Es patognomónico de hemorroides internas', isCorrect: false },
+          { id: 'c', text: 'Sugiere Cáncer de Colon izquierdo', isCorrect: false }
+        ],
+        explanation: 'La melena requiere sangre digerida por ácido. Indica sangrado por encima del ángulo de Treitz (HDA).'
+      },
+      {
+        id: 'q3',
+        text: 'Considerando sus antecedentes (Alcohol + AINEs), ¿cuáles son los diagnósticos más probables?',
+        options: [
+          { id: 'a', text: 'Diverticulitis vs Angiodisplasia', isCorrect: false },
+          { id: 'b', text: 'Várices Esofágicas vs Úlcera Péptica', isCorrect: true },
+          { id: 'c', text: 'Mallory-Weiss vs Esofagitis', isCorrect: false }
+        ],
+        explanation: 'Alcoholismo sugiere Hipertensión Portal (Várices). AINEs sugiere Gastritis erosiva o Úlcera. Son las causas top de HDA.'
+      }
+    ],
     deepDive: {
-      title: 'Alta vs Baja: Reglas de Oro',
+      title: 'HDA vs HDB: La Clínica',
       content: (
-        <div className="text-sm">
-          <p className="mb-2"><strong>Hematemesis:</strong> Sangrado Alto ACTIVO.</p>
-          <p className="mb-2"><strong>Melena:</strong> Sangrado Alto digerido (90%).</p>
-          <p>Si es alcohólico pensar en <strong>Várices</strong>. Si toma AINEs pensar en <strong>Úlcera</strong>.</p>
+        <div className="text-sm space-y-2">
+          <div className="p-2 bg-red-50 rounded border-l-4 border-red-400">
+            <strong>Hemorragia Alta:</strong> Hematemesis (vómito rojo/café) o Melena (negra). Aumenta la UREA plasmática (digestión de proteínas).
+          </div>
+          <div className="p-2 bg-amber-50 rounded border-l-4 border-amber-400">
+            <strong>Hemorragia Baja:</strong> Hematoquecia (sangre fresca/rutilante) o Proctorragia. Generalmente sin inestabilidad tan brusca salvo masiva.
+          </div>
         </div>
       ),
-      pearl: 'Primero Estabilidad Hemodinámica (TA, FC, Perfusión), después buscar la causa.',
-      error: 'Enviar a endoscopía a un paciente chocado (inestable).'
+      pearl: 'Melena = Sangre digerida. Si ves sangre roja rutilante por recto PERO el paciente está chocado, pensá en HDA masiva con tránsito acelerado.',
+      error: 'Asumir que si sale sangre roja por abajo "seguro es del colon" en un paciente inestable.'
     }
   },
   {
     id: 'case-3',
-    title: 'Caso 3: "Me duele mucho la panza"',
+    title: 'Caso 3: "Dolor abdominal intenso"',
     patientInfo: {
-      demographics: 'Joven de 20 años.',
-      history: 'Sin antecedentes relevantes.',
-      symptoms: 'Dolor migró de epigastrio a Fosa Ilíaca Derecha. Abdomen "en tabla", defensa y rebote (+).',
+      demographics: 'Mujer, 27 años.',
+      history: 'Sana previamente.',
+      symptoms: 'Dolor comenzó en epigastrio y migró a Fosa Ilíaca Derecha. Fiebre 38°C. Defensa muscular.',
     },
-    quiz: {
-      question: '¿Qué indica la tríada Dolor + Defensa + Rebote?',
-      options: [
-        { id: 'a', text: 'Gastroenteritis aguda', isCorrect: false },
-        { id: 'b', text: 'Irritación Peritoneal (Quirúrgico)', isCorrect: true },
-        { id: 'c', text: 'Cólico renal', isCorrect: false },
-      ],
-      explanation: 'Esto es un Abdomen Agudo Peritoneal. El dolor que migra (Cronología de Murphy) es típico de apendicitis.'
-    },
+    questions: [
+      {
+        id: 'q1',
+        text: 'Examen físico: Defensa muscular involuntaria y Blumberg (+). ¿Cuál es el diagnóstico SINDRÓMICO?',
+        options: [
+          { id: 'a', text: 'Síndrome de Intestino Irritable', isCorrect: false },
+          { id: 'b', text: 'Abdomen Agudo Peritoneal (Quirúrgico)', isCorrect: true },
+          { id: 'c', text: 'Cólico Biliar simple', isCorrect: false }
+        ],
+        explanation: 'La defensa (vientre en tabla) y el rebote (Blumberg) indican irritación del peritoneo parietal. Es una urgencia.'
+      },
+      {
+        id: 'q2',
+        text: 'Si el dolor fuera en Hipocondrio Derecho irradiado a escápula tras comer grasas, pensarías en:',
+        options: [
+          { id: 'a', text: 'Colecistitis Aguda', isCorrect: true },
+          { id: 'b', text: 'Pancreatitis Aguda', isCorrect: false },
+          { id: 'c', text: 'Apendicitis Aguda', isCorrect: false }
+        ],
+        explanation: 'Correcto. Colecistitis = Signo de Murphy (+), dolor HD. Pancreatitis = Dolor "en cinturón" hacia atrás.'
+      },
+      {
+        id: 'q3',
+        text: 'Volviendo a nuestra paciente (dolor en FID que migró). ¿Cuál es la conducta inicial adecuada?',
+        options: [
+          { id: 'a', text: 'Alta con analgésicos y control en 48hs', isCorrect: false },
+          { id: 'b', text: 'Nada por boca (NPO), Vía Periférica, Interconsulta Cirugía', isCorrect: true },
+          { id: 'c', text: 'Antibióticos orales inmediatos sin imagen', isCorrect: false }
+        ],
+        explanation: 'Ante sospecha de apendicitis: Reposo digestivo pre-quirúrgico, hidratación y valoración por cirujano.'
+      }
+    ],
     deepDive: {
-      title: 'Diagnóstico Diferencial',
+      title: 'Diagnóstico Diferencial: Ubicación',
       content: (
         <div className="text-sm grid grid-cols-1 gap-2">
-          <div className="bg-slate-50 p-2 rounded border-l-4 border-blue-500">
-            <strong>Apendicitis:</strong> Migración a FID. Blumberg (+).
-          </div>
-          <div className="bg-slate-50 p-2 rounded border-l-4 border-green-500">
-            <strong>Colecistitis:</strong> Hipocondrio Derecho. Murphy (+).
-          </div>
+          <ul className="list-disc pl-4 space-y-1">
+            <li><strong>FID (Fosa Ilíaca Der):</strong> Apendicitis (Cronología de Murphy: epigastrio -> FID).</li>
+            <li><strong>HD (Hipocondrio Der):</strong> Patología Biliar (Colecistitis/Colangitis).</li>
+            <li><strong>Epigastrio en Cinturón:</strong> Pancreatitis (buscar alcohol o litiasis).</li>
+            <li><strong>FII (Fosa Ilíaca Izq):</strong> Diverticulitis (común en mayores).</li>
+          </ul>
         </div>
       ),
-      pearl: 'Vientre en tabla + Rebote = Quirúrgico hasta demostrar lo contrario.',
-      error: 'Tapar el dolor con analgésicos potentes sin tener diagnóstico o evaluación quirúrgica.'
+      pearl: 'El dolor visceral es mal localizado (línea media). Cuando se inflama el peritoneo parietal, el dolor se localiza (en el lugar del órgano).',
+      error: 'Dar el alta a un dolor abdominal sin haber palpado el abdomen buscando signos de peritonitis.'
     }
   },
   {
     id: 'case-4',
-    title: 'Caso 4: "Estoy cansada y subí de peso"',
+    title: 'Caso 4: "Cansancio y peso"',
     patientInfo: {
-      demographics: 'Mujer, 25 años.',
-      history: 'Irregularidades menstruales.',
-      symptoms: 'Astenia, intolerancia al frío, piel seca, bradicardia, aumento de peso.',
+      demographics: 'Mujer, 32 años.',
+      history: 'Aumento de 8kg en 6 meses. Caída de cabello.',
+      symptoms: 'Astenia, constipación, piel seca, bradicardia (58 lpm), irregularidad menstrual.',
     },
-    quiz: {
-      question: 'Además de descartar SOP, ¿qué estudio es indispensable?',
-      options: [
-        { id: 'a', text: 'Resonancia de Cerebro', isCorrect: false },
-        { id: 'b', text: 'Perfil Tiroideo (TSH/T4L)', isCorrect: true },
-        { id: 'c', text: 'Cortisol urinario', isCorrect: false },
-      ],
-      explanation: 'La clínica de "metabolismo lento" (frío, bradicardia, piel seca) apunta fuerte a Hipotiroidismo.'
-    },
+    questions: [
+      {
+        id: 'q1',
+        text: 'La paciente consulta por "problemas hormonales". Clínicamente, ¿qué cuadro se ajusta mejor?',
+        options: [
+          { id: 'a', text: 'Hipertiroidismo', isCorrect: false },
+          { id: 'b', text: 'Síndrome de Ovario Poliquístico (SOP)', isCorrect: false },
+          { id: 'c', text: 'Hipotiroidismo', isCorrect: true }
+        ],
+        explanation: 'El SOP da obesidad y trastornos menstruales, PERO la piel seca, el frío, la bradicardia y la constipación son clásicos del Hipotiroidismo.'
+      },
+      {
+        id: 'q2',
+        text: 'Solicitas TSH y T4 Libre. Llega: TSH 15 uUI/mL (Alta), T4L 0.6 ng/dL (Baja). Diagnóstico:',
+        options: [
+          { id: 'a', text: 'Hipotiroidismo Primario', isCorrect: true },
+          { id: 'b', text: 'Hipotiroidismo Central (Hipofisario)', isCorrect: false },
+          { id: 'c', text: 'Hipotiroidismo Subclínico', isCorrect: false }
+        ],
+        explanation: 'Falla la glándula tiroides (Primario), por eso la hipófisis grita (TSH alta) intentando estimularla, pero no responde (T4 baja).'
+      },
+      {
+        id: 'q3',
+        text: 'Si la paciente tuviera hirsutismo, acné y resistencia a la insulina, pensarías más en:',
+        options: [
+          { id: 'a', text: 'Enfermedad de Addison', isCorrect: false },
+          { id: 'b', text: 'Síndrome de Ovario Poliquístico (SOP)', isCorrect: true },
+          { id: 'c', text: 'Prolactinoma', isCorrect: false }
+        ],
+        explanation: 'Exacto. El SOP es un estado hiperandrogénico. El hipotiroidismo es un estado hipometabólico.'
+      }
+    ],
     deepDive: {
-      title: 'Interpretando el Laboratorio',
+      title: 'El Eje Tiroideo',
       content: (
-        <div className="text-sm space-y-2">
-           <div className="p-2 bg-blue-100 rounded text-blue-900">
-             <strong>TSH Alta + T4L Baja:</strong><br/> Hipotiroidismo PRIMARIO (Falla la glándula).
-           </div>
-           <div className="p-2 bg-purple-100 rounded text-purple-900">
-             <strong>TSH Baja + T4L Baja:</strong><br/> Hipotiroidismo CENTRAL (Falla hipófisis).
-           </div>
+        <div className="text-sm">
+          <p className="mb-2">La TSH es la prueba de screening más sensible.</p>
+          <ul className="space-y-2">
+            <li className="flex gap-2">
+              <span className="font-bold text-blue-600">TSH ↑ T4L ↓:</span> Hipotiroidismo Clínico (El más común, Hashimoto).
+            </li>
+            <li className="flex gap-2">
+              <span className="font-bold text-orange-600">TSH ↑ T4L N:</span> Hipotiroidismo Subclínico.
+            </li>
+            <li className="flex gap-2">
+              <span className="font-bold text-purple-600">TSH ↓ T4L ↓:</span> Problema Central (Hipófisis/Hipotálamo). Raro.
+            </li>
+          </ul>
         </div>
       ),
-      pearl: 'Mujer joven + Trastorno menstrual + Aumento de peso = Pedir TSH siempre.',
-      error: 'Diagnosticar Ovario Poliquístico (SOP) sin descartar primero patología tiroidea.'
+      pearl: 'Ante depresión refractaria, constipación pertinaz o dislipemia difícil de tratar: pedí siempre una TSH.',
+      error: 'Tratar la obesidad de la paciente sin evaluar función tiroidea previamente.'
     }
   },
   {
     id: 'case-5',
-    title: 'Caso 5: "Se me hinchó la panza"',
+    title: 'Caso 5: "Panza con líquido"',
     patientInfo: {
-      demographics: 'Varón, 55 años.',
-      history: 'Hepatitis viral previa.',
-      symptoms: 'Abdomen globoso (Ascitis), circulación colateral, arañas vasculares.',
+      demographics: 'Varón, 58 años.',
+      history: 'Etilista de jerarquía.',
+      symptoms: 'Distensión abdominal progresiva, ictericia leve, edemas MMII. Abdomen con matidez desplazable.',
     },
-    quiz: {
-      question: 'Realizas una paracentesis. ¿Qué indica un GASA ≥ 1.1?',
-      options: [
-        { id: 'a', text: 'Carcinomatosis peritoneal', isCorrect: false },
-        { id: 'b', text: 'Hipertensión Portal', isCorrect: true },
-        { id: 'c', text: 'Tuberculosis peritoneal', isCorrect: false },
-      ],
-      explanation: 'El GASA (Gradiente Albúmina Suero-Ascitis) alto indica que la presión hidrostática está empujando el líquido, típico de HTP/Cirrosis.'
-    },
+    questions: [
+      {
+        id: 'q1',
+        text: 'Al examen físico de abdomen, ¿qué signo diferencia la ascitis de la simple obesidad?',
+        options: [
+          { id: 'a', text: 'Ombligo hacia adentro', isCorrect: false },
+          { id: 'b', text: 'Matidez desplazable y Onda ascítica', isCorrect: true },
+          { id: 'c', text: 'Dolor a la palpación profunda', isCorrect: false }
+        ],
+        explanation: 'En la ascitis, el líquido cae por gravedad. Si ponés al paciente de costado, la matidez se "mueve" hacia abajo. El aire (timpanismo) flota.'
+      },
+      {
+        id: 'q2',
+        text: 'Realizas paracentesis. GASA (Gradiente Albúmina Suero-Ascitis) = 1.4 (>1.1). ¿Causa?',
+        options: [
+          { id: 'a', text: 'Carcinomatosis Peritoneal', isCorrect: false },
+          { id: 'b', text: 'Hipertensión Portal (Cirrosis / Falla Cardíaca)', isCorrect: true },
+          { id: 'c', text: 'Tuberculosis Peritoneal', isCorrect: false }
+        ],
+        explanation: 'GASA > 1.1 significa que hay presión empujando el líquido fuera de los vasos (Transudado por presión). Típico de Cirrosis o Insuf. Cardíaca.'
+      },
+      {
+        id: 'q3',
+        text: '¿Cómo diferencias clínicamente si es Cirrosis o Insuficiencia Cardíaca (ambas GASA alto)?',
+        options: [
+          { id: 'a', text: 'Por la Ingurgitación Yugular', isCorrect: true },
+          { id: 'b', text: 'Por el tamaño de la panza', isCorrect: false },
+          { id: 'c', text: 'No se puede diferenciar', isCorrect: false }
+        ],
+        explanation: 'La Falla Cardíaca tiene cuello "lleno" (Ingurgitación Yugular, Reflujo Hepatoyugular). La Cirrosis tiene cuello "vacío" pero estigmas (arañas, palma hepática).'
+      }
+    ],
     deepDive: {
-      title: 'El GASA',
+      title: 'Interpretación del GASA',
       content: (
         <div className="text-sm">
-           <p className="mb-2"><strong>GASA = Albúmina Suero - Albúmina Ascitis</strong></p>
-           <ul className="space-y-1">
-             <li className="flex items-center"><span className="w-3 h-3 rounded-full bg-green-500 mr-2"></span> ≥ 1.1: Cirrosis, Falla Cardíaca.</li>
-             <li className="flex items-center"><span className="w-3 h-3 rounded-full bg-red-500 mr-2"></span> &lt; 1.1: Cáncer, TBC, Pancreatitis.</li>
-           </ul>
+          <p className="font-bold mb-1">GASA ≥ 1.1 g/dL (Hipertensión Portal)</p>
+          <ul className="list-disc pl-4 mb-2 text-xs">
+            <li>Cirrosis (Proteínas en ascitis bajas).</li>
+            <li>Insuficiencia Cardíaca (Proteínas en ascitis altas).</li>
+            <li>Síndrome de Budd-Chiari.</li>
+          </ul>
+          <p className="font-bold mb-1">GASA &lt; 1.1 g/dL (Inflamación/Tumor)</p>
+          <ul className="list-disc pl-4 text-xs">
+            <li>Carcinomatosis (Cáncer).</li>
+            <li>Tuberculosis.</li>
+            <li>Pancreatitis / Síndrome Nefrótico.</li>
+          </ul>
         </div>
       ),
-      pearl: 'Estigmas (Arañas, Eritema) + Ascitis = Cirrosis casi seguro.',
-      error: 'No punzar una ascitis nueva (hay que descartar infección/cáncer).'
+      pearl: 'Ascitis nueva en un adulto requiere paracentesis diagnóstica siempre (GASA, Citológico, Cultivo).',
+      error: 'Asumir que toda ascitis es cirrosis. Un paciente cirótico puede tener peritonitis bacteriana espontánea (urgencia).'
     }
   }
 ];

@@ -12,6 +12,13 @@ export interface QuizOption {
   isCorrect: boolean;
 }
 
+export interface Question {
+  id: string;
+  text: string;
+  options: QuizOption[];
+  explanation: string | React.ReactNode; // Feedback específico de la pregunta
+}
+
 export interface CaseData {
   id: string;
   title: string;
@@ -20,22 +27,11 @@ export interface CaseData {
     history: string;
     symptoms: string;
   };
-  quiz: {
-    question: string;
-    options: QuizOption[];
-    explanation: string; // Immediate feedback logic
-  };
+  questions: Question[]; // Ahora es un array de preguntas
   deepDive: {
-    title: string; // e.g., "Score de Wells"
+    title: string;
     content: string | React.ReactNode;
-    pearl: string; // "Perla Clínica"
-    error: string; // "Error Mortal"
-    imagePlaceholder?: string; // URL for a placeholder image
+    pearl: string;
+    error: string;
   };
-}
-
-export interface AppState {
-  currentStepIndex: number;
-  hasAnswered: boolean;
-  score: number;
 }
