@@ -127,7 +127,7 @@ const App: React.FC = () => {
       </div>
       <div className="space-y-2">
         <h1 className="text-3xl font-bold text-slate-800 leading-tight">Clínica Médica<br/><span className="text-blue-600">Ronda de Casos</span></h1>
-        <p className="text-slate-500 font-medium">Hospital Naval • Dr. Oscar Luna Dávila</p>
+        <p className="text-slate-500 font-medium">Hospital Naval • Oscar Luna Dávila</p>
       </div>
       
       <div className="bg-white p-5 rounded-2xl border border-slate-100 shadow-lg w-full text-left">
@@ -145,7 +145,7 @@ const App: React.FC = () => {
           </li>
           <li className="flex gap-3">
             <div className="bg-blue-100 text-blue-700 rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">3</div>
-            <p className="text-slate-600 text-sm">Revisión profunda ("Deep Dive") al finalizar cada caso.</p>
+            <p className="text-slate-600 text-sm">Conclusiones clave y perlas clínicas al finalizar cada caso.</p>
           </li>
         </ul>
       </div>

@@ -60,56 +60,56 @@ export const CLINICAL_CASES: CaseData[] = [
       title: 'Cálculo del Score de Wells (Este Paciente)',
       content: (
         <div className="text-sm space-y-2">
-          <p className="mb-2 text-slate-600">Veamos por qué este paciente tiene <strong>Alta Probabilidad (9 pts)</strong>:</p>
-          <table className="w-full text-xs border-collapse border border-slate-200 mb-2 shadow-sm">
-            <thead className="bg-blue-50 text-blue-800">
+          <p className="mb-2 text-slate-700">Veamos por qué este paciente tiene <strong>Alta Probabilidad (9 pts)</strong>:</p>
+          <table className="w-full text-xs border-collapse border border-slate-300 mb-2 shadow-sm">
+            <thead className="bg-slate-800 text-white">
               <tr>
-                <th className="p-2 border text-left">Criterio</th>
-                <th className="p-2 border text-center">Valor</th>
-                <th className="p-2 border text-center">¿Presente?</th>
+                <th className="p-2 border border-slate-600 text-left">Criterio</th>
+                <th className="p-2 border border-slate-600 text-center">Valor</th>
+                <th className="p-2 border border-slate-600 text-center">¿Presente?</th>
               </tr>
             </thead>
             <tbody>
-              <tr className="bg-yellow-50">
-                <td className="p-2 border font-medium">Signos Clínicos de TVP</td>
-                <td className="p-2 border text-center">3.0</td>
-                <td className="p-2 border text-center font-bold text-green-600">SÍ (+3.0)</td>
+              <tr className="bg-blue-100 text-slate-800">
+                <td className="p-2 border border-slate-300 font-medium">Signos Clínicos de TVP</td>
+                <td className="p-2 border border-slate-300 text-center">3.0</td>
+                <td className="p-2 border border-slate-300 text-center font-bold text-blue-700">SÍ (+3.0)</td>
               </tr>
-              <tr className="bg-yellow-50">
-                <td className="p-2 border font-medium">TEP es el dx más probable</td>
-                <td className="p-2 border text-center">3.0</td>
-                <td className="p-2 border text-center font-bold text-green-600">SÍ (+3.0)</td>
+              <tr className="bg-blue-100 text-slate-800">
+                <td className="p-2 border border-slate-300 font-medium">TEP es el dx más probable</td>
+                <td className="p-2 border border-slate-300 text-center">3.0</td>
+                <td className="p-2 border border-slate-300 text-center font-bold text-blue-700">SÍ (+3.0)</td>
               </tr>
-              <tr className="bg-yellow-50">
-                <td className="p-2 border">Frecuencia Cardíaca &gt; 100</td>
-                <td className="p-2 border text-center">1.5</td>
-                <td className="p-2 border text-center font-bold text-green-600">SÍ (+1.5)</td>
+              <tr className="bg-blue-100 text-slate-800">
+                <td className="p-2 border border-slate-300">Frecuencia Cardíaca &gt; 100</td>
+                <td className="p-2 border border-slate-300 text-center">1.5</td>
+                <td className="p-2 border border-slate-300 text-center font-bold text-blue-700">SÍ (+1.5)</td>
               </tr>
-              <tr className="bg-yellow-50">
-                <td className="p-2 border">Cirugía/Inmovilización &lt;4 sem</td>
-                <td className="p-2 border text-center">1.5</td>
-                <td className="p-2 border text-center font-bold text-green-600">SÍ (+1.5)</td>
+              <tr className="bg-blue-100 text-slate-800">
+                <td className="p-2 border border-slate-300">Cirugía/Inmovilización &lt;4 sem</td>
+                <td className="p-2 border border-slate-300 text-center">1.5</td>
+                <td className="p-2 border border-slate-300 text-center font-bold text-blue-700">SÍ (+1.5)</td>
               </tr>
-              <tr>
-                <td className="p-2 border text-slate-400">Antecedente TVP/TEP previo</td>
-                <td className="p-2 border text-center text-slate-400">1.5</td>
-                <td className="p-2 border text-center text-slate-300">NO</td>
+              <tr className="bg-white">
+                <td className="p-2 border border-slate-300 text-slate-600">Antecedente TVP/TEP previo</td>
+                <td className="p-2 border border-slate-300 text-center text-slate-600">1.5</td>
+                <td className="p-2 border border-slate-300 text-center font-semibold text-slate-500">NO</td>
               </tr>
-              <tr>
-                <td className="p-2 border text-slate-400">Hemoptisis</td>
-                <td className="p-2 border text-center text-slate-400">1.0</td>
-                <td className="p-2 border text-center text-slate-300">NO</td>
+              <tr className="bg-white">
+                <td className="p-2 border border-slate-300 text-slate-600">Hemoptisis</td>
+                <td className="p-2 border border-slate-300 text-center text-slate-600">1.0</td>
+                <td className="p-2 border border-slate-300 text-center font-semibold text-slate-500">NO</td>
               </tr>
-              <tr>
-                <td className="p-2 border text-slate-400">Cáncer activo</td>
-                <td className="p-2 border text-center text-slate-400">1.0</td>
-                <td className="p-2 border text-center text-slate-300">NO</td>
+              <tr className="bg-white">
+                <td className="p-2 border border-slate-300 text-slate-600">Cáncer activo</td>
+                <td className="p-2 border border-slate-300 text-center text-slate-600">1.0</td>
+                <td className="p-2 border border-slate-300 text-center font-semibold text-slate-500">NO</td>
               </tr>
             </tbody>
-            <tfoot className="bg-slate-100 font-bold">
+            <tfoot className="bg-slate-100 font-bold border-t-2 border-slate-300">
                <tr>
-                <td className="p-2 border text-right">TOTAL PACIENTE:</td>
-                <td className="p-2 border text-center" colSpan={2}>9.0 Puntos (ALTO)</td>
+                <td className="p-2 border border-slate-300 text-right">TOTAL PACIENTE:</td>
+                <td className="p-2 border border-slate-300 text-center" colSpan={2}>9.0 Puntos (ALTO)</td>
               </tr>
             </tfoot>
           </table>
