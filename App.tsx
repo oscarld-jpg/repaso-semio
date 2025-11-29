@@ -7,13 +7,12 @@ import {
   Activity, 
   ArrowRight, 
   CheckCircle2, 
-  XCircle, 
+  CircleX, 
   RotateCcw,
   User,
   ChevronLeft,
-  FastForward,
   BookOpen,
-  HelpCircle,
+  CircleHelp,
   LayoutDashboard
 } from 'lucide-react';
 
@@ -78,15 +77,8 @@ const App: React.FC = () => {
   };
 
   const prevStep = () => {
-    // Lógica simple de retroceso:
-    // Si estamos en Q>0, volver a Q anterior.
-    // Si estamos en Q0, volver a Intro o Caso anterior summary? 
-    // Para simplificar en clase: Reiniciar caso actual o volver a Intro si es caso 1.
-    
     if (viewState === 'CASE_SUMMARY') {
-        // Volver a la última pregunta feedback
         setViewState('FEEDBACK'); 
-        // (Mantenemos questionIndex en el ultimo)
         return;
     }
 
@@ -99,10 +91,8 @@ const App: React.FC = () => {
     if (viewState === 'QUESTION') {
         if (questionIndex > 0) {
             setQuestionIndex(prev => prev - 1);
-            // Idealmente deberíamos saber qué contestó, pero reseteamos para simpleza
             setSelectedOption(null); 
         } else if (caseIndex > 0) {
-            // Volver al summary del caso anterior
             setCaseIndex(prev => prev - 1);
             setViewState('CASE_SUMMARY');
         } else {
@@ -186,7 +176,6 @@ const App: React.FC = () => {
     </div>
   );
 
-  // --- COMPONENTE: INFORMACIÓN DEL PACIENTE (Compacta) ---
   const PatientCard = ({ caseData, compact = false }: { caseData: any, compact?: boolean }) => (
     <div className={`bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden mb-4 transition-all ${compact ? 'opacity-90' : ''}`}>
         <div className="bg-slate-50 px-4 py-2 border-b border-slate-100 flex items-center gap-2">
@@ -203,7 +192,6 @@ const App: React.FC = () => {
     </div>
   );
 
-  // --- VISTA: PREGUNTA ---
   const renderQuestion = () => {
     const currentCase = CLINICAL_CASES[caseIndex];
     const currentQ = currentCase.questions[questionIndex];
@@ -221,13 +209,11 @@ const App: React.FC = () => {
 
         <h1 className="text-xl font-bold text-slate-800 mb-4 leading-snug">{currentCase.title}</h1>
         
-        {/* Mostrar info completa solo en la primera pregunta, luego compacta o siempre igual? 
-            Mejor siempre igual para tener contexto */}
         <PatientCard caseData={currentCase} />
 
         <div className="mt-6">
             <div className="flex items-center gap-2 mb-3">
-                <HelpCircle size={18} className="text-blue-500" />
+                <CircleHelp size={18} className="text-blue-500" />
                 <h3 className="font-bold text-slate-800 text-lg">Desafío Clínico</h3>
             </div>
             
@@ -254,7 +240,6 @@ const App: React.FC = () => {
     );
   };
 
-  // --- VISTA: FEEDBACK (Respuesta inmediata) ---
   const renderFeedback = () => {
     const currentCase = CLINICAL_CASES[caseIndex];
     const currentQ = currentCase.questions[questionIndex];
@@ -263,26 +248,23 @@ const App: React.FC = () => {
 
     return (
       <div className="animate-slide-up pb-24">
-         {/* Header Resultado */}
          <div className={`p-6 -mx-4 mb-6 rounded-b-3xl text-white shadow-lg ${isCorrect ? 'bg-green-600' : 'bg-red-500'}`}>
             <div className="flex items-center gap-3 mb-2">
-                {isCorrect ? <CheckCircle2 size={28} className="text-green-100" /> : <XCircle size={28} className="text-red-100" />}
+                {isCorrect ? <CheckCircle2 size={28} className="text-green-100" /> : <CircleX size={28} className="text-red-100" />}
                 <h2 className="text-xl font-bold">{isCorrect ? '¡Correcto!' : 'Incorrecto'}</h2>
             </div>
-            {/* Mostrar la opción correcta si se equivocó */}
             {!isCorrect && (
                 <div className="mb-2 text-white/80 text-xs uppercase font-bold tracking-wider">
                     La respuesta correcta era la {currentQ.options.find(o => o.isCorrect)?.id.toUpperCase()}
                 </div>
             )}
             <div className="bg-white/10 p-3 rounded-lg mt-2 backdrop-blur-sm">
-                <p className="text-white text-sm leading-relaxed">
+                <div className="text-white text-sm leading-relaxed">
                     {currentQ.explanation}
-                </p>
+                </div>
             </div>
         </div>
 
-        {/* Botón Siguiente */}
         <div className="fixed bottom-0 left-0 w-full bg-white border-t border-slate-200 p-4 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] z-20">
              <button 
                 onClick={nextStep}
@@ -296,7 +278,6 @@ const App: React.FC = () => {
     );
   };
 
-  // --- VISTA: CASE SUMMARY (Deep Dive) ---
   const renderCaseSummary = () => {
     const currentCase = CLINICAL_CASES[caseIndex];
     
@@ -337,9 +318,7 @@ const App: React.FC = () => {
     );
   };
 
-  // --- TOP NAV (Simple) ---
   const renderTopNav = () => {
-    // No mostrar nav en intro/final
     if (viewState === 'INTRO' || viewState === 'FINAL_SUMMARY') return null;
 
     return (
@@ -354,8 +333,6 @@ const App: React.FC = () => {
             <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">
                 {viewState === 'CASE_SUMMARY' ? 'RESUMEN' : 'EN VIVO'}
             </span>
-
-            {/* Placeholder para balancear el layout */}
             <div className="w-8"></div>
         </div>
     );
@@ -366,10 +343,8 @@ const App: React.FC = () => {
       <div ref={topRef} />
       
       <main className="max-w-md mx-auto min-h-[100dvh] bg-white shadow-2xl overflow-hidden relative flex flex-col">
-        
         {renderTopNav()}
 
-        {/* Progress Bar Global (Casos) */}
         {viewState !== 'INTRO' && viewState !== 'FINAL_SUMMARY' && (
             <div className="w-full h-1 bg-slate-100">
                 <div 
