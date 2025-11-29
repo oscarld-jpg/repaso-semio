@@ -221,7 +221,7 @@ export const CLINICAL_CASES: CaseData[] = [
       content: (
         <div className="text-sm grid grid-cols-1 gap-2">
           <ul className="list-disc pl-4 space-y-1">
-            <li><strong>FID (Fosa Ilíaca Der):</strong> Apendicitis (Cronología de Murphy: epigastrio -> FID).</li>
+            <li><strong>FID (Fosa Ilíaca Der):</strong> Apendicitis (Cronología de Murphy: epigastrio → FID).</li>
             <li><strong>HD (Hipocondrio Der):</strong> Patología Biliar (Colecistitis/Colangitis).</li>
             <li><strong>Epigastrio en Cinturón:</strong> Pancreatitis (buscar alcohol o litiasis).</li>
             <li><strong>FII (Fosa Ilíaca Izq):</strong> Diverticulitis (común en mayores).</li>

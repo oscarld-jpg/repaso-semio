@@ -7,12 +7,12 @@ import {
   Activity, 
   ArrowRight, 
   CheckCircle2, 
-  CircleX, 
+  XCircle, 
   RotateCcw,
   User,
   ChevronLeft,
   BookOpen,
-  CircleHelp,
+  HelpCircle, 
   LayoutDashboard
 } from 'lucide-react';
 
@@ -213,7 +213,7 @@ const App: React.FC = () => {
 
         <div className="mt-6">
             <div className="flex items-center gap-2 mb-3">
-                <CircleHelp size={18} className="text-blue-500" />
+                <HelpCircle size={18} className="text-blue-500" />
                 <h3 className="font-bold text-slate-800 text-lg">Desafío Clínico</h3>
             </div>
             
@@ -250,7 +250,7 @@ const App: React.FC = () => {
       <div className="animate-slide-up pb-24">
          <div className={`p-6 -mx-4 mb-6 rounded-b-3xl text-white shadow-lg ${isCorrect ? 'bg-green-600' : 'bg-red-500'}`}>
             <div className="flex items-center gap-3 mb-2">
-                {isCorrect ? <CheckCircle2 size={28} className="text-green-100" /> : <CircleX size={28} className="text-red-100" />}
+                {isCorrect ? <CheckCircle2 size={28} className="text-green-100" /> : <XCircle size={28} className="text-red-100" />}
                 <h2 className="text-xl font-bold">{isCorrect ? '¡Correcto!' : 'Incorrecto'}</h2>
             </div>
             {!isCorrect && (
